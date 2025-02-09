@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine's Day Proposal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.0.1"></script>
+    <style>
+        body {
+            background-color: #ffebef;
+            overflow: hidden;
+        }
+
+        .heart {
+            position: absolute;
+            color: rgba(255, 0, 100, 0.7);
+            font-size: 24px;
+            animation: floatUp 4s linear infinite;
+            opacity: 0.7;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(100vh) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-10vh) scale(1.5);
+                opacity: 0;
+            }
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 100px;
+            margin-top: 20px;
+        }
+
+        #noBtn {
+            transition: transform 0.3s ease-in-out;
+        }
+
+        #sadImage {
+            display: none;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body class="flex flex-col items-center justify-center h-screen text-center relative">
+    <div class="text-5xl font-bold text-pink-600 animate-bounce">
+        💖 Will You Be My Valentine? 💖
+    </div>
+
+    <div class="image-container">
+        <img src="images/Bubu Dudu Sseeyall Sticker - Bubu dudu Sseeyall - Discover & Share GIFs.gif" alt="Cute Cartoon" class="w-48 mx-auto" />
+    </div>
+
+    <div class="button-container">
+        <button id="yesBtn"
+            class="px-8 py-4 text-lg font-bold text-white bg-red-500 rounded-full shadow-lg hover:bg-red-600 transform transition-transform duration-200 hover:scale-110">
+            Yes 💖
+        </button>
+        <button id="noBtn"
+            class="px-8 py-4 text-lg font-bold text-white bg-gray-400 rounded-full shadow-lg hover:bg-gray-500">
+            No 😢
+        </button>
+    </div>
+
+    <img id="sadImage" src="images/crying.jpg" alt="Sad Face" class="w-40 mx-auto" />
+
+    <script>
+        const noBtn = document.getElementById("noBtn");
+        const sadImage = document.getElementById("sadImage");
+        let noBtnScale = 1.0;
+
+        noBtn.addEventListener("click", () => {
+            sadImage.style.display = "block";
+            noBtnScale -= 0.1;
+            noBtnScale = Math.max(noBtnScale, 0.2);
+            noBtn.style.transform = `scale(${noBtnScale})`;
+        });
+
+        document.getElementById("yesBtn").addEventListener("click", () => {
+            confetti({ particleCount: 150, spread: 80, origin: { y: 0.6 } });
+            gsap.to("body", { backgroundColor: "#ffccd5", duration: 1 });
+            setTimeout(() => {
+                window.location.href = "pillu2.html"; // Redirect to pillu2.html
+            }, 1000);
+        });
+
+        function createHeart() {
+            const heart = document.createElement("div");
+            heart.classList.add("heart");
+            heart.innerHTML = "❤️";
+            document.body.appendChild(heart);
+            heart.style.left = Math.random() * 100 + "vw";
+            heart.style.animationDuration = Math.random() * 2 + 3 + "s";
+            setTimeout(() => { heart.remove(); }, 4000);
+        }
+
+        setInterval(createHeart, 500);
+    </script>
+</body>
+</html>
